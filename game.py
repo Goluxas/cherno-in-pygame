@@ -48,7 +48,10 @@ class Game(object):
 		pass
 
 	def render(self):
+
+		self.screen.clear()
 		self.screen.render()
+
 		scaled = pygame.transform.scale( self.screen.surface, self.size )
 		self.display.blit( scaled, (0,0) )
 
