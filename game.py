@@ -16,6 +16,8 @@ class Game(object):
 
 	SCREEN_CAPTION = 'Rain'
 
+	FRAMERATE = 30.0
+
 	def __init__(self):
 		self.running = False
 
@@ -23,6 +25,8 @@ class Game(object):
 		self.size = self.SCREEN_WIDTH * self.SCALE, self.SCREEN_HEIGHT * self.SCALE
 
 		self.screen = Screen(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
+
+		self.clock = None
 
 	def setup(self):
 		os.environ['SDL_VIDEO_CENTERED'] = '1' # should make the window pop up centered
@@ -32,6 +36,8 @@ class Game(object):
 		self.display = pygame.display.set_mode( self.size )
 		pygame.display.set_caption( self.SCREEN_CAPTION )
 
+		self.clock = pygame.time.Clock()
+
 		self.running = True
 
 	def stop(self):
@@ -40,9 +46,29 @@ class Game(object):
 	def run(self):
 		self.setup()
 
+		delta = 0
+		frames = 0
+		updates = 0
+		timer = 0
+
 		while self.running:
-			self.update()
+
+			dt = self.clock.tick() 				  # dt    = time since last tick() in ms
+			delta += dt / 1000.0 * self.FRAMERATE # delta = % of time till next frame
+			timer += dt							  # timer = accumulated ms
+			while delta >= 1:
+				self.update()
+				updates += 1
+				delta -= 1
+
 			self.render()
+			frames += 1
+
+			if timer > 1000:
+				print '%d ups, %d fps' % (updates, frames)
+				pygame.display.set_caption( '%s | %d ups, %d fps' % ( self.SCREEN_CAPTION, updates, frames ) )
+				updates = frames = 0
+				timer -= 1000
 
 	def update(self):
 		pass
