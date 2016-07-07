@@ -28,6 +28,9 @@ class Game(object):
 
 		self.clock = None
 
+		# fun testing
+		self.x = self.y = 0
+
 	def setup(self):
 		os.environ['SDL_VIDEO_CENTERED'] = '1' # should make the window pop up centered
 
@@ -74,12 +77,13 @@ class Game(object):
 		self.stop()
 
 	def update(self):
-		pass
+		self.x += 1
+		self.y += 1
 
 	def render(self):
 
 		self.screen.clear()
-		self.screen.render()
+		self.screen.render(self.x, self.y)
 
 		scaled = pygame.transform.scale( self.screen.surface, self.size )
 		self.display.blit( scaled, (0,0) )
