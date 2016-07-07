@@ -1,4 +1,4 @@
-import os
+import os, sys
 
 import pygame
 from pygame.locals import *
@@ -41,7 +41,8 @@ class Game(object):
 		self.running = True
 
 	def stop(self):
-		self.running = False
+		pygame.quit()
+		sys.exit(0)
 
 	def run(self):
 		self.setup()
@@ -69,6 +70,8 @@ class Game(object):
 				pygame.display.set_caption( '%s | %d ups, %d fps' % ( self.SCREEN_CAPTION, updates, frames ) )
 				updates = frames = 0
 				timer -= 1000
+
+		self.stop()
 
 	def update(self):
 		pass
