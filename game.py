@@ -4,6 +4,7 @@ import pygame
 from pygame.locals import *
 
 from graphics.screen import Screen
+from input.keyboard import Keyboard
 
 BLACK = pygame.Color(  0,   0,   0)
 WHITE = pygame.Color(255, 255, 255)
@@ -27,6 +28,7 @@ class Game(object):
 		self.screen = Screen(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
 
 		self.clock = None
+		self.keyboard = None
 
 		# fun testing
 		self.x = self.y = 0
@@ -40,6 +42,7 @@ class Game(object):
 		pygame.display.set_caption( self.SCREEN_CAPTION )
 
 		self.clock = pygame.time.Clock()
+		self.keyboard = Keyboard()
 
 		self.running = True
 
@@ -77,8 +80,17 @@ class Game(object):
 		self.stop()
 
 	def update(self):
-		self.x += 1
-		self.y += 1
+
+		self.keyboard.update()
+
+		if self.keyboard.up:
+			self.y -= 1
+		if self.keyboard.down:
+			self.y += 1
+		if self.keyboard.left:
+			self.x -= 1
+		if self.keyboard.right:
+			self.x += 1
 
 	def render(self):
 
