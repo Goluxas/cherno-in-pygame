@@ -3,8 +3,9 @@ import os, sys
 import pygame
 from pygame.locals import *
 
-from graphics.screen import Screen
-from input.keyboard import Keyboard
+# NOTE: Game-related classes are imported
+#       during Game.setup() because they require
+#       pygame.init() to have been called
 
 BLACK = pygame.Color(  0,   0,   0)
 WHITE = pygame.Color(255, 255, 255)
@@ -25,9 +26,8 @@ class Game(object):
 		self.display = None
 		self.size = self.SCREEN_WIDTH * self.SCALE, self.SCREEN_HEIGHT * self.SCALE
 
-		self.screen = Screen(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
-
 		self.clock = None
+		self.screen = None
 		self.keyboard = None
 
 		# fun testing
@@ -39,9 +39,15 @@ class Game(object):
 		pygame.init()
 
 		self.display = pygame.display.set_mode( self.size )
+
+		# imports (since they require pygame.init())
+		from graphics.screen import Screen
+		from input.keyboard import Keyboard
+
 		pygame.display.set_caption( self.SCREEN_CAPTION )
 
 		self.clock = pygame.time.Clock()
+		self.screen = Screen(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
 		self.keyboard = Keyboard()
 
 		self.running = True

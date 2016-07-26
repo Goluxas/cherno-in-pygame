@@ -3,6 +3,8 @@ import random
 import pygame
 from pygame.locals import *
 
+from graphics import sprite
+
 class Screen(object):
 	MAP_SIZE = 8
 	MAP_SIZE_MASK = MAP_SIZE - 1
@@ -29,7 +31,6 @@ class Screen(object):
 			yy = y + y_offset
 			for x in range(self.width):
 				xx = x + x_offset
-				tile_index = ((xx >> 4) & self.MAP_SIZE_MASK) + ((yy >> 4) & self.MAP_SIZE_MASK) * self.MAP_SIZE
-				pixels[x, y] = self.tiles[tile_index]
+				pixels[x, y] = sprite.grass.image.get_at((x % sprite.grass.size, y % sprite.grass.size))
 
 		del pixels
