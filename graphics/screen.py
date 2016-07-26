@@ -15,6 +15,8 @@ class Screen(object):
 
 		self.surface = pygame.Surface((self.width, self.height))
 
+		self.x_offset, self.y_offset = 0, 0
+
 		# tile grid is 64x64 and tile size is 32x32
 		self.tiles = []
 
@@ -24,15 +26,26 @@ class Screen(object):
 	def clear(self):
 		self.surface.fill(0x000000)
 
-	def render(self, x_offset, y_offset):
+	def render_tile(self, xp, yp, tile):
+		"""
+		xp, yp = x, y offsets (tile position relative to the world)
+		"""
+		xp -= self.x_offset
+		yp -= self.y_offset
+
 		pixels = pygame.PixelArray(self.surface)
 
-		for y in range(self.height):
-			yp = y + y_offset
-			if (yp < 0 or yp >= self.height): continue
-			for x in range(self.width):
-				xp = x + x_offset
-				if (xp < 0 or xp >= self.width): continue
-				pixels[xp, yp] = sprite.grass.image.get_at((x % sprite.grass.size, y % sprite.grass.size))
+		for y in range(tile.sprite.size):
+			ya = y + yp # ya = y-absolute, as in position relative to the world
+			for x in range(tile.sprite.size):
+				xa = x + xp
+				if xa < 0 or xa >= self.width or \
+				   ya < 0 or ya >= self.width:
+					   break
+				pixels[xa, ya] = tile.sprite.image.get_at((x, y))
 
 		del pixels
+
+	def set_offset(self, dx, dy):
+		self.x_offset = dx
+		self.y_offset = dy

@@ -30,6 +30,8 @@ class Game(object):
 		self.screen = None
 		self.keyboard = None
 
+		self.level = None
+
 		# fun testing
 		self.x = self.y = 0
 
@@ -43,12 +45,15 @@ class Game(object):
 		# imports (since they require pygame.init())
 		from graphics.screen import Screen
 		from input.keyboard import Keyboard
+		from level.level import RandomLevel
 
 		pygame.display.set_caption( self.SCREEN_CAPTION )
 
 		self.clock = pygame.time.Clock()
 		self.screen = Screen(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
 		self.keyboard = Keyboard()
+
+		self.level = RandomLevel(64, 64)
 
 		self.running = True
 
@@ -101,7 +106,7 @@ class Game(object):
 	def render(self):
 
 		self.screen.clear()
-		self.screen.render(self.x, self.y)
+		self.level.render(self.x, self.y, self.screen)
 
 		scaled = pygame.transform.scale( self.screen.surface, self.size )
 		self.display.blit( scaled, (0,0) )

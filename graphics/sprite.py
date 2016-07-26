@@ -6,15 +6,19 @@ from graphics import spritesheet
 # C for Cherno
 class CSprite(object):
 
-	def __init__(self, size, x, y, sheet):
+	def __init__(self, size, x=0, y=0, sheet=None, color=None):
 		self.size = size
-		self.x = x * size
-		self.y = y * size
-		self.sheet = sheet
-
 		self.image = pygame.Surface((self.size, self.size))
-		
-		self._load()
+
+		if sheet is not None:
+			self.x = x * size
+			self.y = y * size
+			self.sheet = sheet
+
+			self._load()
+
+		elif color is not None:
+			self.image.fill(color)
 
 	def _load(self):
 		"""
@@ -27,4 +31,5 @@ class CSprite(object):
 		
 		self.image.blit(self.sheet.sheet, (0,0), (self.x, self.y, self.size, self.size))
 
-grass = CSprite(16, 0, 0, spritesheet.tiles)
+void_sprite = CSprite(16, color=0x1b87e0)
+grass = CSprite(16, 0, 0, sheet=spritesheet.tiles)
