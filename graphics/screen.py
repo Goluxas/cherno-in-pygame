@@ -28,9 +28,11 @@ class Screen(object):
 		pixels = pygame.PixelArray(self.surface)
 
 		for y in range(self.height):
-			yy = y + y_offset
+			yp = y + y_offset
+			if (yp < 0 or yp >= self.height): continue
 			for x in range(self.width):
-				xx = x + x_offset
-				pixels[x, y] = sprite.grass.image.get_at((x % sprite.grass.size, y % sprite.grass.size))
+				xp = x + x_offset
+				if (xp < 0 or xp >= self.width): continue
+				pixels[xp, yp] = sprite.grass.image.get_at((x % sprite.grass.size, y % sprite.grass.size))
 
 		del pixels
