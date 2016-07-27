@@ -3,10 +3,13 @@ from pygame.locals import *
 
 from graphics import spritesheet
 
-# C for Cherno
-class CSprite(object):
+# Custom sprite class with Cherno functionality added
+class Sprite(pygame.sprite.Sprite):
 
 	def __init__(self, size, x=0, y=0, sheet=None, color=None):
+		# pygame Sprite constructor
+		super(Sprite, self).__init__()
+
 		self.size = size
 		self.image = pygame.Surface((self.size, self.size))
 
@@ -19,6 +22,8 @@ class CSprite(object):
 
 		elif color is not None:
 			self.image.fill(color)
+			
+		self.rect = self.image.get_rect()
 
 	def _load(self):
 		"""
@@ -31,5 +36,5 @@ class CSprite(object):
 		
 		self.image.blit(self.sheet.sheet, (0,0), (self.x, self.y, self.size, self.size))
 
-void_sprite = CSprite(16, color=0x1b87e0)
-grass = CSprite(16, 0, 0, sheet=spritesheet.tiles)
+void_sprite = Sprite(16, color=0x1b87e0)
+grass = Sprite(16, 0, 0, sheet=spritesheet.tiles)
