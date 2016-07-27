@@ -11,10 +11,14 @@ class Player(Mob):
 		self.input = inp
 
 	def update(self):
-		if self.input.up: self.y -= 1
-		if self.input.down: self.y += 1
-		if self.input.left: self.x -= 1
-		if self.input.right: self.x += 1
+		xa = ya = 0
+		if self.input.up: ya -= 1
+		if self.input.down: ya += 1
+		if self.input.left: xa -= 1
+		if self.input.right: xa += 1
+
+		if xa != 0 or ya != 0:
+			self.move(xa, ya)
 
 	def render(self):
 		pass

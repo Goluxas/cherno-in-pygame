@@ -39,25 +39,25 @@ class Mob(Entity):
 		self.direction = 0 # 0=N 1=E 2=S 3=W
 		self.moving = False
 
-		def move(self, xa, ya):
-			# find direction
-			if xa > 0: self.direction = 1
-			if xa < 0: self.direction = 3
-			if ya > 0: self.direction = 2
-			if ya < 0: self.direction = 0
+	def move(self, xa, ya):
+		# find direction
+		if xa > 0: self.direction = 1
+		if xa < 0: self.direction = 3
+		if ya > 0: self.direction = 2
+		if ya < 0: self.direction = 0
 
-			# if there's no collision, move
-			if not self.collision():
-				self.x += xa
-				self.y += ya
+		# if there's no collision, move
+		if not self.collision():
+			self.x += xa
+			self.y += ya
 
-		# abstract
-		def update(self):
-			pass
+	# abstract
+	def update(self):
+		pass
 
-		# abstract
-		def render(self):
-			pass
+	# abstract
+	def render(self):
+		pass
 
-		def collision(self):
-			return False
+	def collision(self):
+		return False
