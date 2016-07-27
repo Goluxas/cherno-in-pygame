@@ -107,7 +107,12 @@ class Game(object):
 	def render(self):
 
 		self.screen.clear()
-		self.level.render(self.player.x, self.player.y, self.screen)
+
+		x_scroll = self.player.x - self.screen.width / 2
+		y_scroll = self.player.y - self.screen.height / 2
+		self.level.render(x_scroll, y_scroll, self.screen)
+
+		self.player.render(self.screen)
 
 		scaled = pygame.transform.scale( self.screen.surface, self.size )
 		self.display.blit( scaled, (0,0) )

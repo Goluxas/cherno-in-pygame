@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 
 from entity import Mob
+from graphics import sprite
 
 class Player(Mob):
 
@@ -20,5 +21,13 @@ class Player(Mob):
 		if xa != 0 or ya != 0:
 			self.move(xa, ya)
 
-	def render(self):
-		pass
+	def render(self, screen):
+		# offsets to center the sprite, since the player is
+		# a 2x2 sprite blob
+		xx = self.x - 16
+		yy = self.y - 16
+
+		screen.render_player(xx,    yy,    sprite.player0)
+		screen.render_player(xx+16, yy,    sprite.player1)
+		screen.render_player(xx,    yy+16, sprite.player2)
+		screen.render_player(xx+16, yy+16, sprite.player3)

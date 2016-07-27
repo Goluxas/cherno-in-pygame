@@ -35,6 +35,16 @@ class Screen(object):
 
 		self.surface.blit(tile.sprite.image, (xp, yp))
 
+	def render_player(self, xp, yp, sprite):
+		"""
+		xp, yp = pixel-level coordinates of the player's 
+		         sprite's top-left corner
+		"""
+		xp -= self.x_offset
+		yp -= self.y_offset
+
+		self.surface.blit(sprite.image, (xp, yp))
+
 	def set_offset(self, dx, dy):
 		self.x_offset = dx
 		self.y_offset = dy
