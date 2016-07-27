@@ -42,8 +42,8 @@ class Sprite(pygame.sprite.Sprite):
 void_sprite = Sprite(16, color=0x1b87e0)
 grass = Sprite(16, 0, 0, sheet=spritesheet.tiles)
 
-# Player sprite, facing down
-player0 = Sprite(16, 4, 10, sheet=spritesheet.tiles, colorkey=0xff00ff)
-player1 = Sprite(16, 5, 10, sheet=spritesheet.tiles, colorkey=0xff00ff)
-player2 = Sprite(16, 4, 11, sheet=spritesheet.tiles, colorkey=0xff00ff)
-player3 = Sprite(16, 5, 11, sheet=spritesheet.tiles, colorkey=0xff00ff)
+# player sprites
+player_up    = Sprite(32, 0, 5, sheet=spritesheet.tiles, colorkey=0xff00ff)
+player_right = Sprite(32, 1, 5, sheet=spritesheet.tiles, colorkey=0xff00ff)
+player_down  = Sprite(32, 2, 5, sheet=spritesheet.tiles, colorkey=0xff00ff)
+player_left  = Sprite(32, 3, 5, sheet=spritesheet.tiles, colorkey=0xff00ff)

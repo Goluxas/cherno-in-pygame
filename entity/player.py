@@ -7,9 +7,13 @@ from graphics import sprite
 class Player(Mob):
 
 	def __init__(self, inp, x=0, y=0):
+		super(Player, self).__init__()
+
 		self.x, self.y = x, y
 
 		self.input = inp
+
+		self.sprite = sprite.player_down
 
 	def update(self):
 		xa = ya = 0
@@ -22,12 +26,12 @@ class Player(Mob):
 			self.move(xa, ya)
 
 	def render(self, screen):
-		# offsets to center the sprite, since the player is
-		# a 2x2 sprite blob
-		xx = self.x - 16
-		yy = self.y - 16
 
-		screen.render_player(xx,    yy,    sprite.player0)
-		screen.render_player(xx+16, yy,    sprite.player1)
-		screen.render_player(xx,    yy+16, sprite.player2)
-		screen.render_player(xx+16, yy+16, sprite.player3)
+		if self.direction == 0: self.sprite = sprite.player_up
+		if self.direction == 1: self.sprite = sprite.player_right
+		if self.direction == 2: self.sprite = sprite.player_down
+		if self.direction == 3: self.sprite = sprite.player_left
+
+		# offset to center the sprite, since the player is
+		# a 32x32 sprite
+		screen.render_player(self.x - 16, self.y - 16, self.sprite)

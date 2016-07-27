@@ -9,7 +9,7 @@ class Entity(object):
 	def __init__(self):
 		self.x, self.y = 0, 0
 		self.removed = False
-		self.level = level
+		self.level = None
 	
 	# abstract
 	def update(self):
