@@ -94,6 +94,8 @@ class Game(object):
 
 		self.keyboard.update()
 
+		if self.keyboard.quit:
+			self.stop()
 		if self.keyboard.up:
 			self.y -= 1
 		if self.keyboard.down:
@@ -102,6 +104,10 @@ class Game(object):
 			self.x -= 1
 		if self.keyboard.right:
 			self.x += 1
+
+		for event in pygame.event.get():
+			if event.type == QUIT:
+				self.stop()
 
 	def render(self):
 

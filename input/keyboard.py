@@ -16,11 +16,14 @@ class Keyboard(object):
 			self.keys[event.key] = False
 
 		# process inputs
+		self.quit = self.keys.get(K_ESCAPE, False)
+
 		self.up = self.keys.get(K_UP, False) or self.keys.get(K_w, False)
 		self.down = self.keys.get(K_DOWN, False) or self.keys.get(K_s, False)
 		self.left = self.keys.get(K_LEFT, False) or self.keys.get(K_a, False)
 		self.right = self.keys.get(K_RIGHT, False) or self.keys.get(K_d, False)
 
+		# for fun
 		for key in self.keys:
 			if self.keys[key]:
 				print "KEY: %s" % key
