@@ -18,7 +18,7 @@ class Game(object):
 
 	SCREEN_CAPTION = 'Rain'
 
-	FRAMERATE = 30.0
+	FRAMERATE = 60.0
 
 	def __init__(self):
 		self.running = False

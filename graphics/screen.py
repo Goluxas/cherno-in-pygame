@@ -26,8 +26,27 @@ class Screen(object):
 
 	def render_tile(self, xp, yp, tile):
 		"""
-		xp, yp = x, y offsets (tile position relative to the world)
+		xp, yp = pixel-level coordinates of tile's left-top 
+		         with screen offsets included
 		"""
+		# remove the screen offset from tile position
+		xp -= self.x_offset
+		yp -= self.y_offset
+
+		self.surface.blit(tile.sprite.image, (xp, yp))
+
+	def set_offset(self, dx, dy):
+		self.x_offset = dx
+		self.y_offset = dy
+
+	"""
+	# For archival purposes, this is Cherno's pixel-level
+	# render method for tiles, as in Episode 38. This works
+	# in Pygame, but is much less efficient than the blit
+	# method. (Swapping from this to blit made FPS jump from
+	# ~30 to ~730!)
+	def render_tile_pixelwise(self, xp, yp, tile):
+		# xp, yp = x, y offsets (tile position relative to the world)
 		xp -= self.x_offset
 		yp -= self.y_offset
 
@@ -44,7 +63,4 @@ class Screen(object):
 				pixels[xa, ya] = tile.sprite.image.get_at((x, y))
 
 		del pixels
-
-	def set_offset(self, dx, dy):
-		self.x_offset = dx
-		self.y_offset = dy
+	"""
