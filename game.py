@@ -32,8 +32,7 @@ class Game(object):
 
 		self.level = None
 
-		# fun testing
-		self.x = self.y = 0
+		self.player = None
 
 	def setup(self):
 		os.environ['SDL_VIDEO_CENTERED'] = '1' # should make the window pop up centered
@@ -46,6 +45,7 @@ class Game(object):
 		from graphics.screen import Screen
 		from input.keyboard import Keyboard
 		from level.level import RandomLevel
+		from entity.player import Player
 
 		pygame.display.set_caption( self.SCREEN_CAPTION )
 
@@ -54,6 +54,8 @@ class Game(object):
 		self.keyboard = Keyboard()
 
 		self.level = RandomLevel(64, 64)
+
+		self.player = Player(self.keyboard)
 
 		self.running = True
 
@@ -84,7 +86,7 @@ class Game(object):
 
 			if timer > 1000:
 				print '%d ups, %d fps' % (updates, frames)
-				pygame.display.set_caption( '%s | %d ups, %d fps' % ( self.SCREEN_CAPTION, updates, frames ) )
+				pygame.display.set_caption( '%s | %d ups, %d fps | X: %d, Y: %d' % ( self.SCREEN_CAPTION, updates, frames, self.player.x, self.player.y ) )
 				updates = frames = 0
 				timer -= 1000
 
@@ -93,17 +95,10 @@ class Game(object):
 	def update(self):
 
 		self.keyboard.update()
-
 		if self.keyboard.quit:
 			self.stop()
-		if self.keyboard.up:
-			self.y -= 1
-		if self.keyboard.down:
-			self.y += 1
-		if self.keyboard.left:
-			self.x -= 1
-		if self.keyboard.right:
-			self.x += 1
+
+		self.player.update()
 
 		for event in pygame.event.get():
 			if event.type == QUIT:
@@ -112,7 +107,7 @@ class Game(object):
 	def render(self):
 
 		self.screen.clear()
-		self.level.render(self.x, self.y, self.screen)
+		self.level.render(self.player.x, self.player.y, self.screen)
 
 		scaled = pygame.transform.scale( self.screen.surface, self.size )
 		self.display.blit( scaled, (0,0) )
