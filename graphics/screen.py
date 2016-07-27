@@ -3,8 +3,6 @@ import random
 import pygame
 from pygame.locals import *
 
-from graphics import sprite
-
 class Screen(object):
 	MAP_SIZE = 8
 	MAP_SIZE_MASK = MAP_SIZE - 1
@@ -39,9 +37,10 @@ class Screen(object):
 			ya = y + yp # ya = y-absolute, as in position relative to the world
 			for x in range(tile.sprite.size):
 				xa = x + xp
-				if xa < 0 or xa >= self.width or \
-				   ya < 0 or ya >= self.width:
+				if xa < -tile.sprite.size or xa >= self.width or \
+				   ya < 0 or ya >= self.height:
 					   break
+				if xa < 0: xa = 0
 				pixels[xa, ya] = tile.sprite.image.get_at((x, y))
 
 		del pixels

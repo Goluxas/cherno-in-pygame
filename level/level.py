@@ -29,6 +29,10 @@ class Level(object):
 
 	def get_tile(self, x, y):
 		# convert from 2D to flat coordinates
+		if x < 0 or y < 0 or \
+		   x >= self.width or y >= self.height: 
+			return tile.void_tile
+
 		t = self.tiles[x + y * self.width]
 
 		if t == 0:
@@ -55,9 +59,9 @@ class Level(object):
 		# Corner pins
 		# converting from pixel-level to tile-level
 		x0 = x_scroll / 16                   # left side of the screen
-		x1 = (x_scroll + screen.width) / 16  # right
+		x1 = (x_scroll + screen.width + 16) / 16  # right
 		y0 = y_scroll / 16                   # top 
-		y1 = (y_scroll + screen.height) / 16 # bottom 
+		y1 = (y_scroll + screen.height + 16) / 16 # bottom 
 
 		for y in range(y0, y1):
 			for x in range(x0, x1):
