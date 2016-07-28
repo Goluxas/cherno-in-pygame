@@ -14,8 +14,16 @@ class Player(Mob):
 		self.input = inp
 
 		self.sprite = sprite.player_down
+		self.anim = 0
+
+		self.walking = False
 
 	def update(self):
+		if self.anim < 7500: # arbitrary number choice, just to avoid overflow
+			self.anim += 1
+		else:
+			self.anim = 0
+
 		xa = ya = 0
 		if self.input.up: ya -= 1
 		if self.input.down: ya += 1
@@ -24,6 +32,9 @@ class Player(Mob):
 
 		if xa != 0 or ya != 0:
 			self.move(xa, ya)
+			self.walking = True
+		else:
+			self.walking = False
 
 	def render(self, screen):
 
@@ -38,13 +49,55 @@ class Player(Mob):
 		x_offset = 16
 
 		flip = 0
-		if self.direction == 0: self.sprite = sprite.player_up
-		if self.direction == 1: self.sprite = sprite.player_side
-		if self.direction == 2: self.sprite = sprite.player_down
+		if self.direction == 0: 
+			self.sprite = sprite.player_up
+			if self.walking:
+				if self.anim % 40 > 30:
+					self.sprite = sprite.player_up_1
+				elif self.anim % 40 > 20:
+					self.sprite = sprite.player_up
+				elif self.anim % 40 > 10:
+					self.sprite = sprite.player_up_2
+				else:
+					self.sprite = sprite.player_up
+
+		if self.direction == 1: 
+			self.sprite = sprite.player_side
+			if self.walking:
+				if self.anim % 40 > 30:
+					self.sprite = sprite.player_side_1
+				elif self.anim % 40 > 20:
+					self.sprite = sprite.player_side
+				elif self.anim % 40 > 10:
+					self.sprite = sprite.player_side_2
+				else:
+					self.sprite = sprite.player_side
+
+		if self.direction == 2: 
+			self.sprite = sprite.player_down
+			if self.walking:
+				if self.anim % 40 > 30:
+					self.sprite = sprite.player_down_1
+				elif self.anim % 40 > 20:
+					self.sprite = sprite.player_down
+				elif self.anim % 40 > 10:
+					self.sprite = sprite.player_down_2
+				else:
+					self.sprite = sprite.player_down
+
 		if self.direction == 3: 
 			self.sprite = sprite.player_side
 			x_offset = 15
 			flip = 1
+			if self.walking:
+				if self.anim % 40 > 30:
+					self.sprite = sprite.player_side_1
+				elif self.anim % 40 > 20:
+					self.sprite = sprite.player_side
+				elif self.anim % 40 > 10:
+					self.sprite = sprite.player_side_2
+				else:
+					self.sprite = sprite.player_side
 
 		# offset to center the sprite, since the player is
 		# a 32x32 sprite
