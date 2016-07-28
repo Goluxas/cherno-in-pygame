@@ -9,11 +9,9 @@ class Keyboard(object):
 
 	def update(self):
 		# read inputs
-		for event in pygame.event.get(KEYDOWN):
-			self.keys[event.key] = True
-
-		for event in pygame.event.get(KEYUP):
-			self.keys[event.key] = False
+		for event in pygame.event.get((KEYDOWN,KEYUP)):
+			if event.type == KEYDOWN: self.keys[event.key] = True
+			if event.type == KEYUP: self.keys[event.key] = False
 
 		# process inputs
 		self.quit = self.keys.get(K_ESCAPE, False)

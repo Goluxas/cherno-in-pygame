@@ -27,11 +27,25 @@ class Player(Mob):
 
 	def render(self, screen):
 
+		"""
+		This silliness is because the UFO sprite
+		is an odd number of pixels wide (and therefore
+		isn't centered in its cell.) When it flips,
+		the whole sprite appears to jump one pixel extra
+		to the left. So to compensate, we use 1 fewer
+		pixel when offsetting the sprite render.
+		"""
+		x_offset = 16
+
+		flip = 0
 		if self.direction == 0: self.sprite = sprite.player_up
-		if self.direction == 1: self.sprite = sprite.player_right
+		if self.direction == 1: self.sprite = sprite.player_side
 		if self.direction == 2: self.sprite = sprite.player_down
-		if self.direction == 3: self.sprite = sprite.player_left
+		if self.direction == 3: 
+			self.sprite = sprite.player_side
+			x_offset = 15
+			flip = 1
 
 		# offset to center the sprite, since the player is
 		# a 32x32 sprite
-		screen.render_player(self.x - 16, self.y - 16, self.sprite)
+		screen.render_player(self.x - x_offset, self.y - 16, self.sprite, flip)

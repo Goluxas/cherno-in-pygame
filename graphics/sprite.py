@@ -44,6 +44,5 @@ grass = Sprite(16, 0, 0, sheet=spritesheet.tiles)
 
 # player sprites
 player_up    = Sprite(32, 0, 5, sheet=spritesheet.tiles, colorkey=0xff00ff)
-player_right = Sprite(32, 1, 5, sheet=spritesheet.tiles, colorkey=0xff00ff)
+player_side = Sprite(32, 1, 5, sheet=spritesheet.tiles, colorkey=0xff00ff)
 player_down  = Sprite(32, 2, 5, sheet=spritesheet.tiles, colorkey=0xff00ff)
-player_left  = Sprite(32, 3, 5, sheet=spritesheet.tiles, colorkey=0xff00ff)

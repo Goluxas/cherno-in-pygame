@@ -35,15 +35,30 @@ class Screen(object):
 
 		self.surface.blit(tile.sprite.image, (xp, yp))
 
-	def render_player(self, xp, yp, sprite):
+	def render_player(self, xp, yp, sprite, flip=0):
 		"""
 		xp, yp = pixel-level coordinates of the player's 
 		         sprite's top-left corner
+		sprite = sprite to render
+		flip   = 2-bit bool: flip_y and flip_x
+				 0 = 00 = flip none
+		         1 = 01 = flip x
+				 2 = 10 = flip y
+				 3 = 11 = flip both
 		"""
 		xp -= self.x_offset
 		yp -= self.y_offset
 
-		self.surface.blit(sprite.image, (xp, yp))
+		# I know this is silly since the transform method
+		# takes 2 bools so the int saves us nothing, but
+		# I'm following Cherno's lead
+		flip_x = flip_y = False
+		if flip == 1 or flip == 3: flip_x = True
+		if flip == 2 or flip == 3: flip_y = True
+
+		reverse = pygame.transform.flip(sprite.image, flip_x, flip_y)
+		#self.surface.blit(sprite.image, (xp, yp))
+		self.surface.blit(reverse, (xp, yp))
 
 	def set_offset(self, dx, dy):
 		self.x_offset = dx
